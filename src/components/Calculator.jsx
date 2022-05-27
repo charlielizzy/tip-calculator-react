@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react"
 
 const Calculator = () => {
-const [bill, setBill] = useState(Number);
-const [tipPercent, setTipPercent] = useState(Number);
+const [bill, setBill] = useState();
+const [tipPercent, setTipPercent] = useState();
 const [people, setPeople] = useState(1);
-const [tipPerPerson, setTipPerPerson] = useState(Number);
-const [totalPerPerson, setTotalPerPerson] = useState(Number);
+const [tipPerPerson, setTipPerPerson] = useState();
+const [totalPerPerson, setTotalPerPerson] = useState();
 const [inputChecked, setInputChecked] = useState(false)
 
 const calculateTipPerPerson = (bill, tipPercent, people) => {
@@ -30,8 +30,10 @@ setInputChecked(true)
 }
 
   useEffect(() => {
-      calculateTipPerPerson(bill, tipPercent, people);
-      calculateTotalPerPerson(bill, tipPerPerson, people);
+      if (bill && tipPercent && people && tipPerPerson) {
+        calculateTipPerPerson(bill, tipPercent, people);
+        calculateTotalPerPerson(bill, tipPerPerson, people)
+      };
   }, [bill, tipPercent, people, tipPerPerson])
 
 console.log("bill", bill);
@@ -42,7 +44,7 @@ console.log("totalPerPerson", totalPerPerson);
 
 return (
     <div>
-        <body>
+        {/* <body> */}
     <h2 className="text-red-900">Spli</h2>
     <br />
     <h2>Tter</h2>
@@ -104,16 +106,7 @@ return (
         </div>
         <div id="number-of-people">
           <p className="text-red-900">Number of people</p>
-          <select value={people} onChange={(e) => setPeople(e.target.value)}>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
+          <input type="number" className="border-2 border-blue-500" value={people} min="1" max="8" onChange={(e) => setPeople(e.target.value)}/>
         </div>
       </div>
       <div class="right-side">
@@ -124,7 +117,7 @@ return (
         </div>
       </div>
     </div>
-  </body>
+  {/* </body> */}
     </div>
 )
 }
