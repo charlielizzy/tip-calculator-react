@@ -15,12 +15,17 @@ const calculateTotalPerPerson = (bill, tipPerPerson, people) => {
     setTotalPerPerson((bill / people) + tipPerPerson) ;
   };
 
-  const returnCustom = () => {
-      return (
-          <input type="number" onChange={(e) => setTipPercent(e.target.value)} />
-      )
-    
-  }
+const makeVisible = () => {
+    document.getElementById("custom-input").classList.remove("invisible")
+}
+
+const makeInvisible = () => {
+    document.getElementById("custom-input").classList.add("invisible")
+}
+
+const handleReset = () => {
+window.location.reload();
+}
 
   useEffect(() => {
       calculateTipPerPerson(bill, tipPercent, people);
@@ -39,13 +44,13 @@ return (
     <h2 className="text-red-900">Spli</h2>
     <br />
     <h2>Tter</h2>
-    <div id="container" class="container">
-      <div id="left-side">
-        <div id="bill-amount">
+    <div class="container">
+      <div>
+        <div>
           <p>Bill</p>
-          <input type="number" id="bill-input" onChange={(e) => setBill(e.target.value)}/>
+          <input type="number" className="border-2 border-blue-500" onChange={(e) => setBill(e.target.value)}/>
         </div>
-        <div id="tip-percentage">
+        <div>
           <p>Select tip %</p>
           <input
             type="radio"
@@ -54,6 +59,7 @@ return (
             name="tip-amounts"
             value="0.05"
             onClick={(e) => setTipPercent(e.target.value)}
+            onClick={makeInvisible}
           /><label for="5">5%</label>
           <input
             type="radio"
@@ -61,7 +67,8 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.1"
-            onClick={(e) => setTipPercent(e.target.value)}
+            onClick={(e) => setTipPercent(e.target.value), makeInvisible}
+            // onClick={makeInvisible}
           /><label for="10">10%</label>
           <input
             type="radio"
@@ -69,6 +76,7 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.15"
+            onClick={makeInvisible}
             onClick={(e) => setTipPercent(e.target.value)}
           /><label for="15">15%</label>
           <input
@@ -78,6 +86,7 @@ return (
             name="tip-amounts"
             value="0.25"
             onClick={(e) => setTipPercent(e.target.value)}
+            onClick={makeInvisible}
           /><label for="25">25%</label>
           <input
             type="radio"
@@ -86,6 +95,7 @@ return (
             name="tip-amounts"
             value="0.5"
             onClick={(e) => setTipPercent(e.target.value)}
+            onClick={makeInvisible}
           /><label for="50">50%</label>
           <input
             type="radio"
@@ -93,13 +103,13 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="custom"
-            onClick={returnCustom()}
+            onClick={makeVisible}
           /><label for="custom">Custom amount</label>
-          
+           <input type="number" id="custom-input" min="0" max="100" className="invisible border-2 border-blue-500" onChange={(e) => setTipPercent(e.target.value / 100)} />
         </div>
         <div id="number-of-people">
           <p className="text-red-900">Number of people</p>
-          <select id="number-of-people" onChange={(e) => setPeople(e.target.value)}>
+          <select onChange={(e) => setPeople(e.target.value)}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -111,11 +121,11 @@ return (
           </select>
         </div>
       </div>
-      <div id="right-side" class="right-side">
-        <div id="tip-pp"><p>Tip amount /person £{tipPerPerson.toFixed(2)}</p></div>
-        <div id="total-pp"><p>Bill amount /person £{totalPerPerson.toFixed(2)}</p></div>
-        <div id="reset-button" class="reset-button">
-          <button type="button">Reset</button>
+      <div class="right-side">
+        <div><p>Tip amount /person £{tipPerPerson.toFixed(2)}</p></div>
+        <div><p>Bill amount /person £{totalPerPerson.toFixed(2)}</p></div>
+        <div class="reset-button" >
+          <button type="button" onClick={handleReset} >Reset</button>
         </div>
       </div>
     </div>
