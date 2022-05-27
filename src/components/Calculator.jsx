@@ -6,6 +6,7 @@ const [tipPercent, setTipPercent] = useState(Number);
 const [people, setPeople] = useState(1);
 const [tipPerPerson, setTipPerPerson] = useState(Number);
 const [totalPerPerson, setTotalPerPerson] = useState(Number);
+const [inputChecked, setInputChecked] = useState(false)
 
 const calculateTipPerPerson = (bill, tipPercent, people) => {
     setTipPerPerson((bill * tipPercent) / people)
@@ -15,16 +16,17 @@ const calculateTotalPerPerson = (bill, tipPerPerson, people) => {
     setTotalPerPerson((bill / people) + tipPerPerson) ;
   };
 
-const makeVisible = () => {
-    document.getElementById("custom-input").classList.remove("invisible")
-}
-
-const makeInvisible = () => {
-    document.getElementById("custom-input").classList.add("invisible")
-}
-
 const handleReset = () => {
-window.location.reload();
+setBill(0);
+setTipPercent(0);
+setPeople(0);
+setTipPerPerson(0);
+setTotalPerPerson(0);
+}
+
+const handleCheck = (e) => {
+setTipPercent(e.target.value);
+setInputChecked(true)
 }
 
   useEffect(() => {
@@ -58,8 +60,8 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.05"
-            onClick={(e) => setTipPercent(e.target.value)}
-            onClick={makeInvisible}
+            checked={tipPercent === "0.05"}
+            onClick={handleCheck}
           /><label for="5">5%</label>
           <input
             type="radio"
@@ -67,8 +69,8 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.1"
-            onClick={(e) => setTipPercent(e.target.value), makeInvisible}
-            // onClick={makeInvisible}
+            checked={tipPercent === "0.1"}
+            onClick={handleCheck}
           /><label for="10">10%</label>
           <input
             type="radio"
@@ -76,8 +78,8 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.15"
-            onClick={makeInvisible}
-            onClick={(e) => setTipPercent(e.target.value)}
+            checked={tipPercent === "0.15"}
+            onClick={handleCheck}
           /><label for="15">15%</label>
           <input
             type="radio"
@@ -85,8 +87,8 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.25"
-            onClick={(e) => setTipPercent(e.target.value)}
-            onClick={makeInvisible}
+            checked={tipPercent === "0.25"}
+            onClick={handleCheck}
           /><label for="25">25%</label>
           <input
             type="radio"
@@ -94,18 +96,11 @@ return (
             class="tip-button"
             name="tip-amounts"
             value="0.5"
-            onClick={(e) => setTipPercent(e.target.value)}
-            onClick={makeInvisible}
+            checked={tipPercent === "0.5"}
+            onClick={handleCheck}
           /><label for="50">50%</label>
-          <input
-            type="radio"
-            id="custom"
-            class="tip-button"
-            name="tip-amounts"
-            value="custom"
-            onClick={makeVisible}
-          /><label for="custom">Custom amount</label>
-           <input type="number" id="custom-input" min="0" max="100" className="invisible border-2 border-blue-500" onChange={(e) => setTipPercent(e.target.value / 100)} />
+          <label for="custom">Custom amount</label>
+           <input type="number" id="custom" min="0" max="100" className="border-2 border-blue-500" onChange={(e) => setTipPercent(e.target.value / 100)} />
         </div>
         <div id="number-of-people">
           <p className="text-red-900">Number of people</p>
@@ -122,8 +117,8 @@ return (
         </div>
       </div>
       <div class="right-side">
-        <div><p>Tip amount /person £{tipPerPerson.toFixed(2)}</p></div>
-        <div><p>Bill amount /person £{totalPerPerson.toFixed(2)}</p></div>
+        <div><p>Tip amount /person {tipPerPerson ? `£${tipPerPerson.toFixed(2)}` : null}</p></div>
+        <div><p>Bill amount /person {totalPerPerson ? `£${totalPerPerson.toFixed(2)}` : null}</p></div>
         <div class="reset-button" >
           <button type="button" onClick={handleReset} >Reset</button>
         </div>
