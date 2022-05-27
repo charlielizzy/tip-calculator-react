@@ -19,7 +19,7 @@ const calculateTotalPerPerson = (bill, tipPerPerson, people) => {
 const handleReset = () => {
 setBill(0);
 setTipPercent(0);
-setPeople(0);
+setPeople(1);
 setTipPerPerson(0);
 setTotalPerPerson(0);
 }
@@ -50,7 +50,7 @@ return (
       <div>
         <div>
           <p>Bill</p>
-          <input type="number" className="border-2 border-blue-500" onChange={(e) => setBill(e.target.value)}/>
+          <input type="number" className="border-2 border-blue-500" value={bill} onChange={(e) => setBill(e.target.value)}/>
         </div>
         <div>
           <p>Select tip %</p>
@@ -100,11 +100,11 @@ return (
             onClick={handleCheck}
           /><label for="50">50%</label>
           <label for="custom">Custom amount</label>
-           <input type="number" id="custom" min="0" max="100" className="border-2 border-blue-500" onChange={(e) => setTipPercent(e.target.value / 100)} />
+           <input type="number" id="custom" min="0" max="100" className="border-2 border-blue-500" onChange={(e) => setTipPercent(e.target.value / 100)} value={inputChecked ? "" : tipPercent * 100} onFocus={() =>  setInputChecked(false)}/>
         </div>
         <div id="number-of-people">
           <p className="text-red-900">Number of people</p>
-          <select onChange={(e) => setPeople(e.target.value)}>
+          <select value={people} onChange={(e) => setPeople(e.target.value)}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
