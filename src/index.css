@@ -2,6 +2,11 @@ body {
   background: hsl(185, 41%, 84%);
   font-family: "Space Mono", monospace;
 }
+
+input[type="radio"]:checked + label {
+  background-color: #9fe8df;
+  color: #00474b;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
